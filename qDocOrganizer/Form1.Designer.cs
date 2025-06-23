@@ -43,17 +43,19 @@
             renameToolStripMenuItem = new ToolStripMenuItem();
             deleteToolStripMenuItem = new ToolStripMenuItem();
             label1 = new Label();
+            copyToToolStripMenuItem = new ToolStripMenuItem();
             contextMenuListViewItem.SuspendLayout();
             SuspendLayout();
             // 
             // bt_ofd
             // 
+            bt_ofd.BackColor = SystemColors.GradientActiveCaption;
             bt_ofd.Location = new Point(12, 12);
             bt_ofd.Name = "bt_ofd";
             bt_ofd.Size = new Size(148, 29);
             bt_ofd.TabIndex = 0;
             bt_ofd.Text = "Open Location";
-            bt_ofd.UseVisualStyleBackColor = true;
+            bt_ofd.UseVisualStyleBackColor = false;
             bt_ofd.Click += bt_ofd_Click;
             // 
             // lb_ofdPath
@@ -120,28 +122,28 @@
             // contextMenuListViewItem
             // 
             contextMenuListViewItem.ImageScalingSize = new Size(20, 20);
-            contextMenuListViewItem.Items.AddRange(new ToolStripItem[] { MoveTo, renameToolStripMenuItem, deleteToolStripMenuItem });
+            contextMenuListViewItem.Items.AddRange(new ToolStripItem[] { MoveTo, copyToToolStripMenuItem, renameToolStripMenuItem, deleteToolStripMenuItem });
             contextMenuListViewItem.Name = "contextMenuListViewItem";
-            contextMenuListViewItem.Size = new Size(211, 104);
+            contextMenuListViewItem.Size = new Size(211, 128);
             // 
             // MoveTo
             // 
             MoveTo.Name = "MoveTo";
-            MoveTo.Size = new Size(210, 24);
+            MoveTo.Size = new Size(140, 24);
             MoveTo.Text = "MoveTo...";
             MoveTo.Click += MoveTo_Click;
             // 
             // renameToolStripMenuItem
             // 
             renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-            renameToolStripMenuItem.Size = new Size(210, 24);
+            renameToolStripMenuItem.Size = new Size(140, 24);
             renameToolStripMenuItem.Text = "Rename";
             renameToolStripMenuItem.Click += renameToolStripMenuItem_Click;
             // 
             // deleteToolStripMenuItem
             // 
             deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            deleteToolStripMenuItem.Size = new Size(210, 24);
+            deleteToolStripMenuItem.Size = new Size(140, 24);
             deleteToolStripMenuItem.Text = "Delete";
             deleteToolStripMenuItem.Click += deleteToolStripMenuItem_Click;
             // 
@@ -155,10 +157,18 @@
             label1.TabIndex = 7;
             label1.Text = "Selected Location:";
             // 
+            // copyToToolStripMenuItem
+            // 
+            copyToToolStripMenuItem.Name = "copyToToolStripMenuItem";
+            copyToToolStripMenuItem.Size = new Size(210, 24);
+            copyToToolStripMenuItem.Text = "CopyTo...";
+            copyToToolStripMenuItem.Click += copyToToolStripMenuItem_Click;
+            // 
             // qDocOrganizer
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.MenuHighlight;
             ClientSize = new Size(794, 773);
             Controls.Add(label1);
             Controls.Add(lstView_files);
@@ -190,5 +200,6 @@
         private ToolStripMenuItem MoveTo;
         private ToolStripMenuItem renameToolStripMenuItem;
         private ToolStripMenuItem deleteToolStripMenuItem;
+        private ToolStripMenuItem copyToToolStripMenuItem;
     }
 }
