@@ -37,6 +37,7 @@
             lstView_files = new ListView();
             FileName = new ColumnHeader();
             FilePath = new ColumnHeader();
+            label1 = new Label();
             SuspendLayout();
             // 
             // bt_ofd
@@ -52,7 +53,7 @@
             // lb_ofdPath
             // 
             lb_ofdPath.AutoSize = true;
-            lb_ofdPath.Location = new Point(175, 16);
+            lb_ofdPath.Location = new Point(307, 16);
             lb_ofdPath.Name = "lb_ofdPath";
             lb_ofdPath.Size = new Size(18, 20);
             lb_ofdPath.TabIndex = 1;
@@ -73,7 +74,7 @@
             // comboBox1
             // 
             comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(175, 44);
+            comboBox1.Location = new Point(166, 45);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(151, 28);
             comboBox1.TabIndex = 4;
@@ -82,7 +83,7 @@
             // lb_extFilter
             // 
             lb_extFilter.AutoSize = true;
-            lb_extFilter.Location = new Point(332, 48);
+            lb_extFilter.Location = new Point(323, 48);
             lb_extFilter.Name = "lb_extFilter";
             lb_extFilter.Size = new Size(109, 20);
             lb_extFilter.TabIndex = 5;
@@ -109,11 +110,22 @@
             FilePath.Text = "File Path";
             FilePath.Width = 600;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(166, 16);
+            label1.Name = "label1";
+            label1.Size = new Size(135, 20);
+            label1.TabIndex = 7;
+            label1.Text = "Selected Location:";
+            // 
             // qDocOrganizer
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(794, 773);
+            Controls.Add(label1);
             Controls.Add(lstView_files);
             Controls.Add(lb_extFilter);
             Controls.Add(comboBox1);
@@ -137,5 +149,6 @@
         private ListView lstView_files;
         private ColumnHeader FileName;
         private ColumnHeader FilePath;
+        private Label label1;
     }
 }
