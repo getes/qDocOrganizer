@@ -99,5 +99,99 @@ namespace qDocOrganizer
                 PopulateListView(selectedExtension);
             }
         }
+
+        private void MoveTo_Click(object sender, EventArgs e)
+        {
+            if (lstView_files.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select one or more files to move.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            using (var folderDialog = new FolderBrowserDialog())
+            {
+                folderDialog.Description = "Select the destination folder";
+                folderDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                if (folderDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string destinationPath = folderDialog.SelectedPath;
+                    var itemsToRemove = new List<ListViewItem>();
+
+                    foreach (ListViewItem item in lstView_files.SelectedItems)
+                    {
+                        string sourceFile = item.SubItems[1].Text;
+                        string fileName = Path.GetFileName(sourceFile);
+                        string destFile = Path.Combine(destinationPath, fileName);
+
+                        try
+                        {
+                            if (File.Exists(sourceFile))
+                            {
+                                // If file with same name exists at destination, prompt for overwrite
+                                if (File.Exists(destFile))
+                                {
+                                    var result = MessageBox.Show(
+                                        $"File '{fileName}' already exists in the destination. Overwrite?",
+                                        "File Exists",
+                                        MessageBoxButtons.YesNo,
+                                        MessageBoxIcon.Question);
+
+                                    if (result != DialogResult.Yes)
+                                        continue;
+                                }
+
+                                File.Move(sourceFile, destFile, true);
+                                allFiles.Remove(sourceFile);
+                                itemsToRemove.Add(item);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Failed to move file: {sourceFile}\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+
+                    foreach (var item in itemsToRemove)
+                    {
+                        lstView_files.Items.Remove(item);
+                    }
+                }
+            }
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lstView_files.SelectedItems.Count == 0)
+                return;
+
+            var itemsToRemove = new List<ListViewItem>();
+            foreach (ListViewItem item in lstView_files.SelectedItems)
+            {
+                string filePath = item.SubItems[1].Text;
+                try
+                {
+                    if (File.Exists(filePath))
+                    {
+                        File.Delete(filePath);
+                    }
+                    allFiles.Remove(filePath);
+                    itemsToRemove.Add(item);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Failed to delete file: {filePath}\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+            foreach (var item in itemsToRemove)
+            {
+                lstView_files.Items.Remove(item);
+            }
+        }
+
+        private void renameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

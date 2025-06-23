@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             bt_ofd = new Button();
             lb_ofdPath = new Label();
             folderBrowser = new FolderBrowserDialog();
@@ -37,7 +38,12 @@
             lstView_files = new ListView();
             FileName = new ColumnHeader();
             FilePath = new ColumnHeader();
+            contextMenuListViewItem = new ContextMenuStrip(components);
+            MoveTo = new ToolStripMenuItem();
+            renameToolStripMenuItem = new ToolStripMenuItem();
+            deleteToolStripMenuItem = new ToolStripMenuItem();
             label1 = new Label();
+            contextMenuListViewItem.SuspendLayout();
             SuspendLayout();
             // 
             // bt_ofd
@@ -93,6 +99,7 @@
             // 
             lstView_files.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lstView_files.Columns.AddRange(new ColumnHeader[] { FileName, FilePath });
+            lstView_files.ContextMenuStrip = contextMenuListViewItem;
             lstView_files.Location = new Point(12, 78);
             lstView_files.Name = "lstView_files";
             lstView_files.Size = new Size(779, 684);
@@ -109,6 +116,34 @@
             // 
             FilePath.Text = "File Path";
             FilePath.Width = 600;
+            // 
+            // contextMenuListViewItem
+            // 
+            contextMenuListViewItem.ImageScalingSize = new Size(20, 20);
+            contextMenuListViewItem.Items.AddRange(new ToolStripItem[] { MoveTo, renameToolStripMenuItem, deleteToolStripMenuItem });
+            contextMenuListViewItem.Name = "contextMenuListViewItem";
+            contextMenuListViewItem.Size = new Size(211, 104);
+            // 
+            // MoveTo
+            // 
+            MoveTo.Name = "MoveTo";
+            MoveTo.Size = new Size(210, 24);
+            MoveTo.Text = "MoveTo...";
+            MoveTo.Click += MoveTo_Click;
+            // 
+            // renameToolStripMenuItem
+            // 
+            renameToolStripMenuItem.Name = "renameToolStripMenuItem";
+            renameToolStripMenuItem.Size = new Size(210, 24);
+            renameToolStripMenuItem.Text = "Rename";
+            renameToolStripMenuItem.Click += renameToolStripMenuItem_Click;
+            // 
+            // deleteToolStripMenuItem
+            // 
+            deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            deleteToolStripMenuItem.Size = new Size(210, 24);
+            deleteToolStripMenuItem.Text = "Delete";
+            deleteToolStripMenuItem.Click += deleteToolStripMenuItem_Click;
             // 
             // label1
             // 
@@ -134,6 +169,7 @@
             Controls.Add(bt_ofd);
             Name = "qDocOrganizer";
             Text = "qDocOrganizer";
+            contextMenuListViewItem.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -150,5 +186,9 @@
         private ColumnHeader FileName;
         private ColumnHeader FilePath;
         private Label label1;
+        private ContextMenuStrip contextMenuListViewItem;
+        private ToolStripMenuItem MoveTo;
+        private ToolStripMenuItem renameToolStripMenuItem;
+        private ToolStripMenuItem deleteToolStripMenuItem;
     }
 }
