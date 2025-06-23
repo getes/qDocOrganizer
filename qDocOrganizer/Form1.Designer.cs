@@ -32,10 +32,11 @@
             lb_ofdPath = new Label();
             folderBrowser = new FolderBrowserDialog();
             chkb_recursive = new CheckBox();
-            lstbox_files = new ListBox();
             comboBox1 = new ComboBox();
             lb_extFilter = new Label();
             lstView_files = new ListView();
+            FileName = new ColumnHeader();
+            FilePath = new ColumnHeader();
             SuspendLayout();
             // 
             // bt_ofd
@@ -67,17 +68,6 @@
             chkb_recursive.Text = "Recursive?";
             chkb_recursive.UseVisualStyleBackColor = true;
             // 
-            // lstbox_files
-            // 
-            lstbox_files.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            lstbox_files.FormattingEnabled = true;
-            lstbox_files.Location = new Point(10, 78);
-            lstbox_files.MultiColumn = true;
-            lstbox_files.Name = "lstbox_files";
-            lstbox_files.SelectionMode = SelectionMode.MultiSimple;
-            lstbox_files.Size = new Size(330, 684);
-            lstbox_files.TabIndex = 3;
-            // 
             // comboBox1
             // 
             comboBox1.FormattingEnabled = true;
@@ -98,12 +88,22 @@
             // 
             // lstView_files
             // 
-            lstView_files.Location = new Point(364, 78);
+            lstView_files.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            lstView_files.Columns.AddRange(new ColumnHeader[] { FileName, FilePath });
+            lstView_files.Location = new Point(12, 78);
             lstView_files.Name = "lstView_files";
-            lstView_files.Size = new Size(427, 684);
+            lstView_files.Size = new Size(779, 684);
             lstView_files.TabIndex = 6;
             lstView_files.UseCompatibleStateImageBehavior = false;
             lstView_files.View = View.Details;
+            // 
+            // FileName
+            // 
+            FileName.Width = 200;
+            // 
+            // FilePath
+            // 
+            FilePath.Width = 600;
             // 
             // Form1
             // 
@@ -113,7 +113,6 @@
             Controls.Add(lstView_files);
             Controls.Add(lb_extFilter);
             Controls.Add(comboBox1);
-            Controls.Add(lstbox_files);
             Controls.Add(chkb_recursive);
             Controls.Add(lb_ofdPath);
             Controls.Add(bt_ofd);
@@ -129,9 +128,10 @@
         private Label lb_ofdPath;
         private FolderBrowserDialog folderBrowser;
         private CheckBox chkb_recursive;
-        private ListBox lstbox_files;
         private ComboBox comboBox1;
         private Label lb_extFilter;
         private ListView lstView_files;
+        private ColumnHeader FileName;
+        private ColumnHeader FilePath;
     }
 }

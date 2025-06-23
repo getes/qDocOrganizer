@@ -2,6 +2,8 @@ namespace qDocOrganizer
 {
     public partial class Form1 : Form
     {
+        private List<string> allFiles = new List<string>();
+
         public Form1()
         {
             InitializeComponent();
@@ -51,8 +53,6 @@ namespace qDocOrganizer
         //    }
         //}
 
-        private List<string> allFiles = new List<string>();
-
         private void bt_ofd_Click(object sender, EventArgs e)
         {
             folderBrowser.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -84,14 +84,26 @@ namespace qDocOrganizer
                     comboBox1.Items.Add("All Files");
                     foreach (var ext in extensions)
                     {
-                        comboBox1.Items.Add(ext);
+                        if (!string.IsNullOrEmpty(ext))
+                            comboBox1.Items.Add(ext);
                     }
 
-                    //list all files in the listbox
-                    lstbox_files.Items.Clear();
+                    // Configure ListView for details view and columns
+                    lstView_files.View = View.Details;
+                    if (lstView_files.Columns.Count == 0)
+                    {
+                        lstView_files.Columns.Add("File Name", 200);
+                        lstView_files.Columns.Add("Full Path", 400);
+                    }
+
+                    // List all files in the ListView with two columns
+                    lstView_files.Items.Clear();
                     foreach (var file in allFiles)
                     {
-                        lstbox_files.Items.Add(file);
+                        var fileName = Path.GetFileName(file);
+                        var item = new ListViewItem(fileName);
+                        item.SubItems.Add(file);
+                        lstView_files.Items.Add(item);
                     }
                 }
             }
@@ -115,13 +127,13 @@ namespace qDocOrganizer
         private void comboBox1_SelectedValueChanged(object sender, EventArgs e)
         {
             string selectedExtension = comboBox1.SelectedItem?.ToString();
-            lstbox_files.Items.Clear();
+            lstView_files.Items.Clear();
 
             if (string.IsNullOrEmpty(selectedExtension) || selectedExtension == "All Files")
             {
                 foreach (var file in allFiles)
                 {
-                    lstbox_files.Items.Add(file);
+                    lstView_files.Items.Add(file);
                 }
             }
             else
@@ -130,7 +142,7 @@ namespace qDocOrganizer
                 {
                     if (Path.GetExtension(file)?.ToLowerInvariant() == selectedExtension)
                     {
-                        lstbox_files.Items.Add(file);
+                        lstView_files.Items.Add(file);
                     }
                 }
             }
