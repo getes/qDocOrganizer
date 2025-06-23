@@ -1,57 +1,13 @@
 namespace qDocOrganizer
 {
-    public partial class Form1 : Form
+    public partial class qDocOrganizer : Form
     {
         private List<string> allFiles = new List<string>();
 
-        public Form1()
+        public qDocOrganizer()
         {
             InitializeComponent();
         }
-
-        //private void bt_ofd_Click(object sender, EventArgs e)
-        //{
-        //    folderBrowser.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        //    if (folderBrowser.ShowDialog() == DialogResult.OK)
-        //    {
-        //        List<string> files = new List<string>();
-        //        string selectedPath = folderBrowser.SelectedPath;
-        //        if (!string.IsNullOrEmpty(selectedPath) && Directory.Exists(selectedPath))
-        //        {
-        //            lb_ofdPath.Text = selectedPath;
-        //            if (chkb_recursive.Checked)
-        //            {
-        //                files.AddRange(GetAllFilesRecursive(selectedPath));
-        //            }
-        //            else
-        //            {
-        //                files.AddRange(Directory.GetFiles(selectedPath));
-        //            }
-
-        //            // Extract all unique file extensions from the files list
-        //            var extensions = files
-        //                .Select(f => Path.GetExtension(f)?.ToLowerInvariant())
-        //                .Where(ext => !string.IsNullOrEmpty(ext))
-        //                .Distinct()
-        //                .ToList();
-
-        //            // Populate the combo box with the unique extensions
-        //            comboBox1.Items.Clear();
-        //            comboBox1.Items.Add("All Files");
-        //            foreach (var ext in extensions)
-        //            {
-        //                comboBox1.Items.Add(ext);
-        //            }
-
-        //            //list all files in the listbox
-        //            lstbox_files.Items.Clear();
-        //            foreach (var file in files)
-        //            {
-        //                lstbox_files.Items.Add(file);
-        //            }
-        //        }
-        //    }
-        //}
 
         private void bt_ofd_Click(object sender, EventArgs e)
         {
@@ -88,24 +44,30 @@ namespace qDocOrganizer
                             comboBox1.Items.Add(ext);
                     }
 
-                    // Configure ListView for details view and columns
-                    lstView_files.View = View.Details;
-                    if (lstView_files.Columns.Count == 0)
-                    {
-                        lstView_files.Columns.Add("File Name", 200);
-                        lstView_files.Columns.Add("Full Path", 400);
-                    }
-
-                    // List all files in the ListView with two columns
-                    lstView_files.Items.Clear();
-                    foreach (var file in allFiles)
-                    {
-                        var fileName = Path.GetFileName(file);
-                        var item = new ListViewItem(fileName);
-                        item.SubItems.Add(file);
-                        lstView_files.Items.Add(item);
-                    }
+                    PopulateListView();
                 }
+            }
+        }
+
+        private void PopulateListView(string selectedExtension = null)
+        {
+            // List all files in the ListView with two columns
+            lstView_files.Items.Clear();
+            foreach (var file in allFiles)
+            {
+                if (selectedExtension == null)
+                {
+                    // If no extension is selected, add all files
+                }
+                else if (Path.GetExtension(file)?.ToLowerInvariant() != selectedExtension)
+                {
+                    continue; // Skip files that do not match the selected extension
+                }
+
+                var fileName = Path.GetFileName(file);
+                var item = new ListViewItem(fileName);
+                item.SubItems.Add(file);
+                lstView_files.Items.Add(item);
             }
         }
 
@@ -127,24 +89,14 @@ namespace qDocOrganizer
         private void comboBox1_SelectedValueChanged(object sender, EventArgs e)
         {
             string selectedExtension = comboBox1.SelectedItem?.ToString();
-            lstView_files.Items.Clear();
 
             if (string.IsNullOrEmpty(selectedExtension) || selectedExtension == "All Files")
             {
-                foreach (var file in allFiles)
-                {
-                    lstView_files.Items.Add(file);
-                }
+                PopulateListView();
             }
             else
             {
-                foreach (var file in allFiles)
-                {
-                    if (Path.GetExtension(file)?.ToLowerInvariant() == selectedExtension)
-                    {
-                        lstView_files.Items.Add(file);
-                    }
-                }
+                PopulateListView(selectedExtension);
             }
         }
     }

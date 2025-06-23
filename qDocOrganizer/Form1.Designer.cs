@@ -1,6 +1,6 @@
 ﻿namespace qDocOrganizer
 {
-    partial class Form1
+    partial class qDocOrganizer
     {
         /// <summary>
         ///  Required designer variable.
@@ -61,6 +61,8 @@
             // chkb_recursive
             // 
             chkb_recursive.AutoSize = true;
+            chkb_recursive.Checked = true;
+            chkb_recursive.CheckState = CheckState.Checked;
             chkb_recursive.Location = new Point(14, 48);
             chkb_recursive.Name = "chkb_recursive";
             chkb_recursive.Size = new Size(100, 24);
@@ -99,13 +101,15 @@
             // 
             // FileName
             // 
+            FileName.Text = "File Name";
             FileName.Width = 200;
             // 
             // FilePath
             // 
+            FilePath.Text = "File Path";
             FilePath.Width = 600;
             // 
-            // Form1
+            // qDocOrganizer
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -116,8 +120,8 @@
             Controls.Add(chkb_recursive);
             Controls.Add(lb_ofdPath);
             Controls.Add(bt_ofd);
-            Name = "Form1";
-            Text = "Form1";
+            Name = "qDocOrganizer";
+            Text = "qDocOrganizer";
             ResumeLayout(false);
             PerformLayout();
         }
