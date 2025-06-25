@@ -8,7 +8,7 @@ namespace qDocOrganizer
             "Developed by QaSaR\n\n" +
             "This application allows you to organize your documents by moving or copying them to different folders based on their file extensions.\n\n" +
             "For more information, visit: https://github.com/getes/qDocOrganizer";
-        private List<string> allFiles = new List<string>();
+        public List<string> allFiles = new List<string>();
 
 
         public qDocOrganizer()
@@ -151,10 +151,31 @@ namespace qDocOrganizer
                         string fileName = Path.GetFileName(sourceFile);
                         string destFile = Path.Combine(destinationPath, fileName);
 
-                        bool flowControl = FileManager.MoveFile(itemsToRemove, item, sourceFile, fileName, destFile);
-                        if (!flowControl)
+                        try
                         {
-                            continue;
+                            if (File.Exists(sourceFile))
+                            {
+                                // If file with same name exists at destination, prompt for overwrite
+                                if (File.Exists(destFile))
+                                {
+                                    var result = MessageBox.Show(
+                                        $"File '{fileName}' already exists in the destination. Overwrite?",
+                                        "File Exists",
+                                        MessageBoxButtons.YesNo,
+                                        MessageBoxIcon.Question);
+
+                                    if (result == DialogResult.Yes)
+                                        continue; //Skip moving this file if user chooses not to overwrite
+                                }
+
+                                File.Move(sourceFile, destFile, true);
+                                allFiles.Remove(sourceFile);
+                                itemsToRemove.Add(item);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Failed to move file: {sourceFile}\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
 
@@ -172,7 +193,23 @@ namespace qDocOrganizer
                 return;
 
             var itemsToRemove = new List<ListViewItem>();
-            FileManager.RemoveFiles(itemsToRemove);
+            foreach (ListViewItem item in lstView_files.SelectedItems)
+            {
+                string filePath = item.SubItems[1].Text;
+                try
+                {
+                    if (File.Exists(filePath))
+                    {
+                        File.Delete(filePath);
+                    }
+                    allFiles.Remove(filePath);
+                    itemsToRemove.Add(item);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Failed to delete file: {filePath}\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
 
             foreach (var item in itemsToRemove)
             {
@@ -196,14 +233,25 @@ namespace qDocOrganizer
                 {
                     string destinationPath = folderDialog.SelectedPath;
 
-                    FileManager.CopyFilesTo(destinationPath);
+                    foreach (ListViewItem item in lstView_files.SelectedItems)
+                    {
+                        string sourceFile = item.SubItems[1].Text;
+                        string fileName = Path.GetFileName(sourceFile);
+                        string destFile = Path.Combine(destinationPath, fileName);
+
+                        bool flowControl = FileManager.CopyFileTo(sourceFile, fileName, destFile);
+                        if (!flowControl)
+                        {
+                            continue;
+                        }
+                    }
                 }
             }
         }
 
         #endregion
 
-#region Form Events
+        #region Form Events
         private void qDocOrganizer_Load(object sender, EventArgs e)
         {
             // Set the initial theme to default
