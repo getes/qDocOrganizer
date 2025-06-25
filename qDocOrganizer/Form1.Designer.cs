@@ -40,19 +40,27 @@
             FilePath = new ColumnHeader();
             contextMenuListViewItem = new ContextMenuStrip(components);
             MoveTo = new ToolStripMenuItem();
-            renameToolStripMenuItem = new ToolStripMenuItem();
-            deleteToolStripMenuItem = new ToolStripMenuItem();
-            label1 = new Label();
             copyToToolStripMenuItem = new ToolStripMenuItem();
+            deleteToolStripMenuItem = new ToolStripMenuItem();
+            renameToolStripMenuItem = new ToolStripMenuItem();
+            label1 = new Label();
+            chkb_darkMode = new CheckBox();
+            menuStrip1 = new MenuStrip();
+            menuToolStripMenuItem = new ToolStripMenuItem();
+            toolStripMenuItem1 = new ToolStripMenuItem();
+            toolStripMenuItem2 = new ToolStripMenuItem();
+            toolStripMenuItem3 = new ToolStripMenuItem();
             contextMenuListViewItem.SuspendLayout();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // bt_ofd
             // 
-            bt_ofd.BackColor = SystemColors.GradientActiveCaption;
-            bt_ofd.Location = new Point(12, 12);
+            bt_ofd.BackColor = SystemColors.ButtonFace;
+            bt_ofd.Location = new Point(9, 34);
+            bt_ofd.Margin = new Padding(3, 2, 3, 2);
             bt_ofd.Name = "bt_ofd";
-            bt_ofd.Size = new Size(148, 29);
+            bt_ofd.Size = new Size(130, 22);
             bt_ofd.TabIndex = 0;
             bt_ofd.Text = "Open Location";
             bt_ofd.UseVisualStyleBackColor = false;
@@ -61,9 +69,9 @@
             // lb_ofdPath
             // 
             lb_ofdPath.AutoSize = true;
-            lb_ofdPath.Location = new Point(307, 16);
+            lb_ofdPath.Location = new Point(269, 12);
             lb_ofdPath.Name = "lb_ofdPath";
-            lb_ofdPath.Size = new Size(18, 20);
+            lb_ofdPath.Size = new Size(16, 15);
             lb_ofdPath.TabIndex = 1;
             lb_ofdPath.Text = "...";
             // 
@@ -72,28 +80,31 @@
             chkb_recursive.AutoSize = true;
             chkb_recursive.Checked = true;
             chkb_recursive.CheckState = CheckState.Checked;
-            chkb_recursive.Location = new Point(14, 48);
+            chkb_recursive.ForeColor = SystemColors.ControlText;
+            chkb_recursive.Location = new Point(10, 60);
+            chkb_recursive.Margin = new Padding(3, 2, 3, 2);
             chkb_recursive.Name = "chkb_recursive";
-            chkb_recursive.Size = new Size(100, 24);
+            chkb_recursive.Size = new Size(124, 19);
             chkb_recursive.TabIndex = 2;
-            chkb_recursive.Text = "Recursive?";
+            chkb_recursive.Text = "Include Subfolders";
             chkb_recursive.UseVisualStyleBackColor = true;
             // 
             // comboBox1
             // 
             comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(166, 45);
+            comboBox1.Location = new Point(145, 34);
+            comboBox1.Margin = new Padding(3, 2, 3, 2);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(151, 28);
+            comboBox1.Size = new Size(133, 23);
             comboBox1.TabIndex = 4;
             comboBox1.SelectedValueChanged += comboBox1_SelectedValueChanged;
             // 
             // lb_extFilter
             // 
             lb_extFilter.AutoSize = true;
-            lb_extFilter.Location = new Point(323, 48);
+            lb_extFilter.Location = new Point(283, 36);
             lb_extFilter.Name = "lb_extFilter";
-            lb_extFilter.Size = new Size(109, 20);
+            lb_extFilter.Size = new Size(86, 15);
             lb_extFilter.TabIndex = 5;
             lb_extFilter.Text = "Extension Filter";
             // 
@@ -102,9 +113,10 @@
             lstView_files.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lstView_files.Columns.AddRange(new ColumnHeader[] { FileName, FilePath });
             lstView_files.ContextMenuStrip = contextMenuListViewItem;
-            lstView_files.Location = new Point(12, 78);
+            lstView_files.Location = new Point(10, 118);
+            lstView_files.Margin = new Padding(3, 2, 3, 2);
             lstView_files.Name = "lstView_files";
-            lstView_files.Size = new Size(779, 684);
+            lstView_files.Size = new Size(682, 530);
             lstView_files.TabIndex = 6;
             lstView_files.UseCompatibleStateImageBehavior = false;
             lstView_files.View = View.Details;
@@ -122,54 +134,101 @@
             // contextMenuListViewItem
             // 
             contextMenuListViewItem.ImageScalingSize = new Size(20, 20);
-            contextMenuListViewItem.Items.AddRange(new ToolStripItem[] { MoveTo, copyToToolStripMenuItem, renameToolStripMenuItem, deleteToolStripMenuItem });
+            contextMenuListViewItem.Items.AddRange(new ToolStripItem[] { MoveTo, copyToToolStripMenuItem, deleteToolStripMenuItem, renameToolStripMenuItem });
             contextMenuListViewItem.Name = "contextMenuListViewItem";
-            contextMenuListViewItem.Size = new Size(211, 128);
+            contextMenuListViewItem.Size = new Size(128, 92);
             // 
             // MoveTo
             // 
             MoveTo.Name = "MoveTo";
-            MoveTo.Size = new Size(140, 24);
-            MoveTo.Text = "MoveTo...";
+            MoveTo.Size = new Size(127, 22);
+            MoveTo.Text = "Move to...";
             MoveTo.Click += MoveTo_Click;
             // 
-            // renameToolStripMenuItem
+            // copyToToolStripMenuItem
             // 
-            renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-            renameToolStripMenuItem.Size = new Size(140, 24);
-            renameToolStripMenuItem.Text = "Rename";
-            renameToolStripMenuItem.Click += renameToolStripMenuItem_Click;
+            copyToToolStripMenuItem.Name = "copyToToolStripMenuItem";
+            copyToToolStripMenuItem.Size = new Size(127, 22);
+            copyToToolStripMenuItem.Text = "Copy to...";
+            copyToToolStripMenuItem.Click += copyToToolStripMenuItem_Click;
             // 
             // deleteToolStripMenuItem
             // 
             deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            deleteToolStripMenuItem.Size = new Size(140, 24);
+            deleteToolStripMenuItem.Size = new Size(127, 22);
             deleteToolStripMenuItem.Text = "Delete";
             deleteToolStripMenuItem.Click += deleteToolStripMenuItem_Click;
+            // 
+            // renameToolStripMenuItem
+            // 
+            renameToolStripMenuItem.Name = "renameToolStripMenuItem";
+            renameToolStripMenuItem.Size = new Size(127, 22);
+            renameToolStripMenuItem.Text = "Rename";
+            renameToolStripMenuItem.Click += renameToolStripMenuItem_Click;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(166, 16);
+            label1.Location = new Point(145, 12);
             label1.Name = "label1";
-            label1.Size = new Size(135, 20);
+            label1.Size = new Size(109, 15);
             label1.TabIndex = 7;
             label1.Text = "Selected Location:";
             // 
-            // copyToToolStripMenuItem
+            // chkb_darkMode
             // 
-            copyToToolStripMenuItem.Name = "copyToToolStripMenuItem";
-            copyToToolStripMenuItem.Size = new Size(210, 24);
-            copyToToolStripMenuItem.Text = "CopyTo...";
-            copyToToolStripMenuItem.Click += copyToToolStripMenuItem_Click;
+            chkb_darkMode.AutoSize = true;
+            chkb_darkMode.Location = new Point(596, 32);
+            chkb_darkMode.Name = "chkb_darkMode";
+            chkb_darkMode.Size = new Size(87, 19);
+            chkb_darkMode.TabIndex = 8;
+            chkb_darkMode.Text = "DarkTheme";
+            chkb_darkMode.UseVisualStyleBackColor = true;
+            chkb_darkMode.CheckedChanged += checkBox1_CheckedChanged;
+            // 
+            // menuStrip1
+            // 
+            menuStrip1.Items.AddRange(new ToolStripItem[] { menuToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(695, 24);
+            menuStrip1.TabIndex = 9;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // menuToolStripMenuItem
+            // 
+            menuToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItem1, toolStripMenuItem2, toolStripMenuItem3 });
+            menuToolStripMenuItem.Name = "menuToolStripMenuItem";
+            menuToolStripMenuItem.Size = new Size(50, 20);
+            menuToolStripMenuItem.Text = "Menu";
+            // 
+            // toolStripMenuItem1
+            // 
+            toolStripMenuItem1.Name = "toolStripMenuItem1";
+            toolStripMenuItem1.Size = new Size(127, 22);
+            toolStripMenuItem1.Text = "Move to...";
+            // 
+            // toolStripMenuItem2
+            // 
+            toolStripMenuItem2.Name = "toolStripMenuItem2";
+            toolStripMenuItem2.Size = new Size(127, 22);
+            toolStripMenuItem2.Text = "Copy to...";
+            // 
+            // toolStripMenuItem3
+            // 
+            toolStripMenuItem3.Name = "toolStripMenuItem3";
+            toolStripMenuItem3.Size = new Size(127, 22);
+            toolStripMenuItem3.Text = "Delete";
             // 
             // qDocOrganizer
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.MenuHighlight;
-            ClientSize = new Size(794, 773);
+            BackColor = SystemColors.Control;
+            ClientSize = new Size(695, 656);
+            Controls.Add(chkb_darkMode);
+            Controls.Add(menuStrip1);
             Controls.Add(label1);
             Controls.Add(lstView_files);
             Controls.Add(lb_extFilter);
@@ -177,9 +236,13 @@
             Controls.Add(chkb_recursive);
             Controls.Add(lb_ofdPath);
             Controls.Add(bt_ofd);
+            MainMenuStrip = menuStrip1;
+            Margin = new Padding(3, 2, 3, 2);
             Name = "qDocOrganizer";
             Text = "qDocOrganizer";
             contextMenuListViewItem.ResumeLayout(false);
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -201,5 +264,11 @@
         private ToolStripMenuItem renameToolStripMenuItem;
         private ToolStripMenuItem deleteToolStripMenuItem;
         private ToolStripMenuItem copyToToolStripMenuItem;
+        private CheckBox chkb_darkMode;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem menuToolStripMenuItem;
+        private ToolStripMenuItem toolStripMenuItem1;
+        private ToolStripMenuItem toolStripMenuItem2;
+        private ToolStripMenuItem toolStripMenuItem3;
     }
 }

@@ -9,6 +9,23 @@ namespace qDocOrganizer
             InitializeComponent();
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            // Detect Ctrl + A
+            if (keyData == (Keys.Control | Keys.A))
+            {
+                if (lstView_files.Focused || lstView_files.ContainsFocus)
+                {
+                    foreach (ListViewItem item in lstView_files.Items)
+                    {
+                        item.Selected = true;
+                    }
+                    return true;
+                }
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
         private void bt_ofd_Click(object sender, EventArgs e)
         {
             folderBrowser.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -45,6 +62,7 @@ namespace qDocOrganizer
                     }
 
                     PopulateListView();
+                    comboBox1.Refresh();
                 }
             }
         }
@@ -244,5 +262,49 @@ namespace qDocOrganizer
 
         }
 
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkb_darkMode.Checked == true)
+            {
+                SetDarkTheme();
+            }
+            else
+            {
+                setDefaultTheme();
+            }
+        }
+
+        private void SetDarkTheme()
+        {
+            // Set dark theme colors for controls
+            this.BackColor = Color.FromArgb(30, 30, 30);
+            lstView_files.BackColor = Color.FromArgb(40, 40, 40);
+            lstView_files.ForeColor = Color.White;
+            folderBrowser.Description = "Select a folder to organize";
+            lb_ofdPath.ForeColor = Color.White;
+            comboBox1.BackColor = Color.FromArgb(40, 40, 40);
+            comboBox1.ForeColor = Color.White;
+            bt_ofd.BackColor = Color.FromArgb(50, 50, 50);
+            bt_ofd.ForeColor = Color.White;
+            lb_extFilter.ForeColor = Color.White;
+            chkb_recursive.ForeColor = Color.White;
+        }
+
+        private void setDefaultTheme()
+        {
+            // Set default theme colors for controls
+            this.BackColor = SystemColors.Control;
+            lstView_files.BackColor = SystemColors.Window;
+            lstView_files.ForeColor = SystemColors.ControlText;
+            folderBrowser.Description = "Select a folder to organize";
+            lb_ofdPath.ForeColor = SystemColors.ControlText;
+            comboBox1.BackColor = SystemColors.Window;
+            comboBox1.ForeColor = SystemColors.ControlText;
+            bt_ofd.BackColor = SystemColors.ButtonFace;
+            bt_ofd.ForeColor = SystemColors.ControlText;
+            lb_extFilter.ForeColor = SystemColors.ControlText;
+            chkb_recursive.ForeColor = SystemColors.ControlText;
+
+        }
     }
 }
