@@ -49,6 +49,7 @@
             toolStripMoveTo = new ToolStripMenuItem();
             toolStripCopyTo = new ToolStripMenuItem();
             toolStripDelete = new ToolStripMenuItem();
+            toolStripOpenFiles = new ToolStripMenuItem();
             toolStripMenuOptions = new ToolStripMenuItem();
             toolStripMenuTheme = new ToolStripMenuItem();
             toolStripThemeDark = new ToolStripMenuItem();
@@ -124,6 +125,7 @@
             lstView_files.TabIndex = 6;
             lstView_files.UseCompatibleStateImageBehavior = false;
             lstView_files.View = View.Details;
+            lstView_files.DoubleClick += lstView_files_DoubleClick;
             // 
             // FileName
             // 
@@ -140,34 +142,34 @@
             contextMenuListViewItem.ImageScalingSize = new Size(20, 20);
             contextMenuListViewItem.Items.AddRange(new ToolStripItem[] { MoveTo, copyToToolStripMenuItem, deleteToolStripMenuItem, renameToolStripMenuItem });
             contextMenuListViewItem.Name = "contextMenuListViewItem";
-            contextMenuListViewItem.Size = new Size(128, 92);
+            contextMenuListViewItem.Size = new Size(135, 92);
             // 
             // MoveTo
             // 
             MoveTo.Name = "MoveTo";
-            MoveTo.Size = new Size(127, 22);
+            MoveTo.Size = new Size(134, 22);
             MoveTo.Text = "Move to...";
             MoveTo.Click += MoveTo_Click;
             // 
             // copyToToolStripMenuItem
             // 
             copyToToolStripMenuItem.Name = "copyToToolStripMenuItem";
-            copyToToolStripMenuItem.Size = new Size(127, 22);
+            copyToToolStripMenuItem.Size = new Size(134, 22);
             copyToToolStripMenuItem.Text = "Copy to...";
             copyToToolStripMenuItem.Click += copyToToolStripMenuItem_Click;
             // 
             // deleteToolStripMenuItem
             // 
             deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            deleteToolStripMenuItem.Size = new Size(127, 22);
+            deleteToolStripMenuItem.Size = new Size(134, 22);
             deleteToolStripMenuItem.Text = "Delete";
             deleteToolStripMenuItem.Click += deleteToolStripMenuItem_Click;
             // 
             // renameToolStripMenuItem
             // 
             renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-            renameToolStripMenuItem.Size = new Size(127, 22);
-            renameToolStripMenuItem.Text = "Rename";
+            renameToolStripMenuItem.Size = new Size(134, 22);
+            renameToolStripMenuItem.Text = "Open File/s";
             renameToolStripMenuItem.Click += renameToolStripMenuItem_Click;
             // 
             // label1
@@ -191,7 +193,7 @@
             // 
             // menuToolStripMenuItem
             // 
-            menuToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { toolStripMoveTo, toolStripCopyTo, toolStripDelete });
+            menuToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { toolStripMoveTo, toolStripCopyTo, toolStripDelete, toolStripOpenFiles });
             menuToolStripMenuItem.Name = "menuToolStripMenuItem";
             menuToolStripMenuItem.Size = new Size(50, 20);
             menuToolStripMenuItem.Text = "Menu";
@@ -217,6 +219,13 @@
             toolStripDelete.Text = "Delete";
             toolStripDelete.Click += toolStripDelete_Click;
             // 
+            // toolStripOpenFiles
+            // 
+            toolStripOpenFiles.Name = "toolStripOpenFiles";
+            toolStripOpenFiles.Size = new Size(180, 22);
+            toolStripOpenFiles.Text = "Open File/s";
+            toolStripOpenFiles.Click += toolStripOpenFiles_Click;
+            // 
             // toolStripMenuOptions
             // 
             toolStripMenuOptions.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuTheme });
@@ -228,20 +237,20 @@
             // 
             toolStripMenuTheme.DropDownItems.AddRange(new ToolStripItem[] { toolStripThemeDark, toolStripDefaultTheme });
             toolStripMenuTheme.Name = "toolStripMenuTheme";
-            toolStripMenuTheme.Size = new Size(180, 22);
+            toolStripMenuTheme.Size = new Size(162, 22);
             toolStripMenuTheme.Text = "Theme Selection";
             // 
             // toolStripThemeDark
             // 
             toolStripThemeDark.Name = "toolStripThemeDark";
-            toolStripThemeDark.Size = new Size(180, 22);
+            toolStripThemeDark.Size = new Size(171, 22);
             toolStripThemeDark.Text = "Set DarkTheme";
             toolStripThemeDark.Click += toolStripThemeDark_Click;
             // 
             // toolStripDefaultTheme
             // 
             toolStripDefaultTheme.Name = "toolStripDefaultTheme";
-            toolStripDefaultTheme.Size = new Size(180, 22);
+            toolStripDefaultTheme.Size = new Size(171, 22);
             toolStripDefaultTheme.Text = "Set Default Theme";
             toolStripDefaultTheme.Click += toolStripDefaultTheme_Click;
             // 
@@ -304,5 +313,6 @@
         private ToolStripMenuItem toolStripThemeDark;
         private ToolStripMenuItem toolStripDefaultTheme;
         private ToolStripMenuItem toolStripAbout;
+        private ToolStripMenuItem toolStripOpenFiles;
     }
 }

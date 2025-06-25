@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace qDocOrganizer
 {
     public partial class qDocOrganizer : Form
@@ -273,11 +275,6 @@ namespace qDocOrganizer
             }
         }
 
-        private void renameToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void toolStripThemeDark_Click(object sender, EventArgs e)
         {
             SetDarkTheme();
@@ -325,6 +322,57 @@ namespace qDocOrganizer
         {
             string aboutText = "qDocOrganizer\n\nVersión 1.0\n\nDeveloped by QaSaR.\n\n© 2025";
             MessageBox.Show(aboutText, "Acerca de qDocOrganizer", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void OpenFileWithDefaultApp(string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                try
+                {
+                    var psi = new ProcessStartInfo
+                    {
+                        FileName = filePath,
+                        UseShellExecute = true // abrir con la app predeterminada de windows
+                    };
+                    Process.Start(psi);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"No se pudo abrir el archivo:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("El archivo no existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void renameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenSelectedFiles();
+        }
+
+        private void lstView_files_DoubleClick(object sender, EventArgs e)
+        {
+            OpenSelectedFiles();
+        }
+
+        private void toolStripOpenFiles_Click(object sender, EventArgs e)
+        {
+            OpenSelectedFiles();
+        }
+
+        private void OpenSelectedFiles()
+        {
+            if (lstView_files.SelectedItems.Count > 0)
+            {
+                foreach (ListViewItem item in lstView_files.SelectedItems)
+                {
+                    string filePath = item.SubItems[1].Text;
+                    OpenFileWithDefaultApp(filePath);
+                }
+            }
         }
     }
 }
