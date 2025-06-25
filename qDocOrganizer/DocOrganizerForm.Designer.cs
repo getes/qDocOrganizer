@@ -42,7 +42,7 @@
             MoveTo = new ToolStripMenuItem();
             copyToToolStripMenuItem = new ToolStripMenuItem();
             deleteToolStripMenuItem = new ToolStripMenuItem();
-            renameToolStripMenuItem = new ToolStripMenuItem();
+            openToolStripMenuItem = new ToolStripMenuItem();
             label1 = new Label();
             menuStrip1 = new MenuStrip();
             menuToolStripMenuItem = new ToolStripMenuItem();
@@ -125,7 +125,7 @@
             lstView_files.TabIndex = 6;
             lstView_files.UseCompatibleStateImageBehavior = false;
             lstView_files.View = View.Details;
-            lstView_files.DoubleClick += lstView_files_DoubleClick;
+            lstView_files.DoubleClick += OpenSelectedFiles;
             // 
             // FileName
             // 
@@ -140,7 +140,7 @@
             // contextMenuListViewItem
             // 
             contextMenuListViewItem.ImageScalingSize = new Size(20, 20);
-            contextMenuListViewItem.Items.AddRange(new ToolStripItem[] { MoveTo, copyToToolStripMenuItem, deleteToolStripMenuItem, renameToolStripMenuItem });
+            contextMenuListViewItem.Items.AddRange(new ToolStripItem[] { MoveTo, copyToToolStripMenuItem, deleteToolStripMenuItem, openToolStripMenuItem });
             contextMenuListViewItem.Name = "contextMenuListViewItem";
             contextMenuListViewItem.Size = new Size(135, 92);
             // 
@@ -165,12 +165,12 @@
             deleteToolStripMenuItem.Text = "Delete";
             deleteToolStripMenuItem.Click += deleteToolStripMenuItem_Click;
             // 
-            // renameToolStripMenuItem
+            // openToolStripMenuItem
             // 
-            renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-            renameToolStripMenuItem.Size = new Size(134, 22);
-            renameToolStripMenuItem.Text = "Open File/s";
-            renameToolStripMenuItem.Click += renameToolStripMenuItem_Click;
+            openToolStripMenuItem.Name = "openToolStripMenuItem";
+            openToolStripMenuItem.Size = new Size(134, 22);
+            openToolStripMenuItem.Text = "Open File/s";
+            openToolStripMenuItem.Click += OpenSelectedFiles;
             // 
             // label1
             // 
@@ -203,28 +203,28 @@
             toolStripMoveTo.Name = "toolStripMoveTo";
             toolStripMoveTo.Size = new Size(180, 22);
             toolStripMoveTo.Text = "Move to...";
-            toolStripMoveTo.Click += toolStripMoveTo_Click;
+            toolStripMoveTo.Click += MoveTo_Click;
             // 
             // toolStripCopyTo
             // 
             toolStripCopyTo.Name = "toolStripCopyTo";
             toolStripCopyTo.Size = new Size(180, 22);
             toolStripCopyTo.Text = "Copy to...";
-            toolStripCopyTo.Click += toolStripCopyTo_Click;
+            toolStripCopyTo.Click += copyToToolStripMenuItem_Click;
             // 
             // toolStripDelete
             // 
             toolStripDelete.Name = "toolStripDelete";
             toolStripDelete.Size = new Size(180, 22);
             toolStripDelete.Text = "Delete";
-            toolStripDelete.Click += toolStripDelete_Click;
+            toolStripDelete.Click += deleteToolStripMenuItem_Click;
             // 
             // toolStripOpenFiles
             // 
             toolStripOpenFiles.Name = "toolStripOpenFiles";
             toolStripOpenFiles.Size = new Size(180, 22);
             toolStripOpenFiles.Text = "Open File/s";
-            toolStripOpenFiles.Click += toolStripOpenFiles_Click;
+            toolStripOpenFiles.Click += OpenSelectedFiles;
             // 
             // toolStripMenuOptions
             // 
@@ -300,7 +300,7 @@
         private Label label1;
         private ContextMenuStrip contextMenuListViewItem;
         private ToolStripMenuItem MoveTo;
-        private ToolStripMenuItem renameToolStripMenuItem;
+        private ToolStripMenuItem openToolStripMenuItem;
         private ToolStripMenuItem deleteToolStripMenuItem;
         private ToolStripMenuItem copyToToolStripMenuItem;
         private MenuStrip menuStrip1;

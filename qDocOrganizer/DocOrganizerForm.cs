@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 namespace qDocOrganizer
 {
     public partial class qDocOrganizer : Form
@@ -40,8 +38,8 @@ namespace qDocOrganizer
                     lb_ofdPath.Text = selectedPath;
                     if (chkb_recursive.Checked)
                     {
-                        allFiles.AddRange(GetAllFilesRecursive(selectedPath));
-                    }
+                        allFiles.AddRange(FileManager.GetAllFilesRecursive(selectedPath));
+                    }   
                     else
                     {
                         allFiles.AddRange(Directory.GetFiles(selectedPath));
@@ -91,21 +89,6 @@ namespace qDocOrganizer
             }
         }
 
-        private IEnumerable<string> GetAllFilesRecursive(string directory)
-        {
-            foreach (var file in Directory.GetFiles(directory))
-            {
-                yield return file;
-            }
-            foreach (var dir in Directory.GetDirectories(directory))
-            {
-                foreach (var file in GetAllFilesRecursive(dir))
-                {
-                    yield return file;
-                }
-            }
-        }
-
         private void comboBox1_SelectedValueChanged(object sender, EventArgs e)
         {
             string selectedExtension = comboBox1.SelectedItem?.ToString();
@@ -118,11 +101,6 @@ namespace qDocOrganizer
             {
                 PopulateListView(selectedExtension);
             }
-        }
-
-        private void toolStripMoveTo_Click(object sender, EventArgs e)
-        {
-            MoveTo_Click(sender, e);
         }
 
         private void MoveTo_Click(object sender, EventArgs e)
@@ -184,11 +162,6 @@ namespace qDocOrganizer
             }
         }
 
-        private void toolStripDelete_Click(object sender, EventArgs e)
-        {
-            deleteToolStripMenuItem_Click(sender, e);
-        }
-
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (lstView_files.SelectedItems.Count == 0)
@@ -217,11 +190,6 @@ namespace qDocOrganizer
             {
                 lstView_files.Items.Remove(item);
             }
-        }
-
-        private void toolStripCopyTo_Click(object sender, EventArgs e)
-        {
-            copyToToolStripMenuItem_Click(sender, e);
         }
 
         private void copyToToolStripMenuItem_Click(object sender, EventArgs e)
@@ -324,53 +292,15 @@ namespace qDocOrganizer
             MessageBox.Show(aboutText, "Acerca de qDocOrganizer", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void OpenFileWithDefaultApp(string filePath)
-        {
-            if (File.Exists(filePath))
-            {
-                try
-                {
-                    var psi = new ProcessStartInfo
-                    {
-                        FileName = filePath,
-                        UseShellExecute = true // abrir con la app predeterminada de windows
-                    };
-                    Process.Start(psi);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"No se pudo abrir el archivo:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            else
-            {
-                MessageBox.Show("El archivo no existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
 
-        private void renameToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            OpenSelectedFiles();
-        }
-
-        private void lstView_files_DoubleClick(object sender, EventArgs e)
-        {
-            OpenSelectedFiles();
-        }
-
-        private void toolStripOpenFiles_Click(object sender, EventArgs e)
-        {
-            OpenSelectedFiles();
-        }
-
-        private void OpenSelectedFiles()
+        private void OpenSelectedFiles(object sender, EventArgs e)
         {
             if (lstView_files.SelectedItems.Count > 0)
             {
                 foreach (ListViewItem item in lstView_files.SelectedItems)
                 {
                     string filePath = item.SubItems[1].Text;
-                    OpenFileWithDefaultApp(filePath);
+                    FileManager.OpenFileWithDefaultApp(filePath);
                 }
             }
         }
