@@ -245,16 +245,6 @@ namespace qDocOrganizer
 
         private void toolStripThemeDark_Click(object sender, EventArgs e)
         {
-            SetDarkTheme();
-        }
-
-        private void toolStripDefaultTheme_Click(object sender, EventArgs e)
-        {
-            setDefaultTheme();
-        }
-
-        private void SetDarkTheme()
-        {
             // Set dark theme colors for controls
             this.BackColor = Color.FromArgb(30, 30, 30);
             lstView_files.BackColor = Color.FromArgb(40, 40, 40);
@@ -269,7 +259,7 @@ namespace qDocOrganizer
             chkb_recursive.ForeColor = Color.White;
         }
 
-        private void setDefaultTheme()
+        private void toolStripDefaultTheme_Click(object sender, EventArgs e)
         {
             // Set default theme colors for controls
             this.BackColor = SystemColors.Control;
@@ -283,7 +273,6 @@ namespace qDocOrganizer
             bt_ofd.ForeColor = SystemColors.ControlText;
             lb_extFilter.ForeColor = SystemColors.ControlText;
             chkb_recursive.ForeColor = SystemColors.ControlText;
-
         }
 
         private void toolStripAbout_Click(object sender, EventArgs e)
