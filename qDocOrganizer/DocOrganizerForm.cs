@@ -2,12 +2,21 @@ namespace qDocOrganizer
 {
     public partial class qDocOrganizer : Form
     {
+        
+        const string aboutText = "qDocOrganizer v1.0\n\n" +
+            "A simple document organizer application.\n" +
+            "Developed by QaSaR\n\n" +
+            "This application allows you to organize your documents by moving or copying them to different folders based on their file extensions.\n\n" +
+            "For more information, visit: https://github.com/getes/qDocOrganizer";
         private List<string> allFiles = new List<string>();
+
 
         public qDocOrganizer()
         {
             InitializeComponent();
         }
+
+        #region Internal Methods
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
@@ -26,6 +35,32 @@ namespace qDocOrganizer
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
+        private void PopulateListView(string selectedExtension = null)
+        {
+            // List all files in the ListView with two columns
+            lstView_files.Items.Clear();
+            foreach (var file in allFiles)
+            {
+                if (selectedExtension == null)
+                {
+                    // If no extension is selected, add all files
+                }
+                else if (Path.GetExtension(file)?.ToLowerInvariant() != selectedExtension)
+                {
+                    continue; // Skip files that do not match the selected extension
+                }
+
+                var fileName = Path.GetFileName(file);
+                var item = new ListViewItem(fileName);
+                item.SubItems.Add(file);
+                lstView_files.Items.Add(item);
+            }
+        }
+
+        #endregion
+
+        #region Buttons and Actions 
+
         private void bt_ofd_Click(object sender, EventArgs e)
         {
             folderBrowser.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -39,7 +74,7 @@ namespace qDocOrganizer
                     if (chkb_recursive.Checked)
                     {
                         allFiles.AddRange(FileManager.GetAllFilesRecursive(selectedPath));
-                    }   
+                    }
                     else
                     {
                         allFiles.AddRange(Directory.GetFiles(selectedPath));
@@ -67,28 +102,6 @@ namespace qDocOrganizer
             }
         }
 
-        private void PopulateListView(string selectedExtension = null)
-        {
-            // List all files in the ListView with two columns
-            lstView_files.Items.Clear();
-            foreach (var file in allFiles)
-            {
-                if (selectedExtension == null)
-                {
-                    // If no extension is selected, add all files
-                }
-                else if (Path.GetExtension(file)?.ToLowerInvariant() != selectedExtension)
-                {
-                    continue; // Skip files that do not match the selected extension
-                }
-
-                var fileName = Path.GetFileName(file);
-                var item = new ListViewItem(fileName);
-                item.SubItems.Add(file);
-                lstView_files.Items.Add(item);
-            }
-        }
-
         private void comboBox1_SelectedValueChanged(object sender, EventArgs e)
         {
             string selectedExtension = comboBox1.SelectedItem?.ToString();
@@ -100,6 +113,18 @@ namespace qDocOrganizer
             else
             {
                 PopulateListView(selectedExtension);
+            }
+        }
+
+        private void OpenSelectedFiles(object sender, EventArgs e)
+        {
+            if (lstView_files.SelectedItems.Count > 0)
+            {
+                foreach (ListViewItem item in lstView_files.SelectedItems)
+                {
+                    string filePath = item.SubItems[1].Text;
+                    FileManager.OpenFileWithDefaultApp(filePath);
+                }
             }
         }
 
@@ -126,31 +151,10 @@ namespace qDocOrganizer
                         string fileName = Path.GetFileName(sourceFile);
                         string destFile = Path.Combine(destinationPath, fileName);
 
-                        try
+                        bool flowControl = FileManager.MoveFile(itemsToRemove, item, sourceFile, fileName, destFile);
+                        if (!flowControl)
                         {
-                            if (File.Exists(sourceFile))
-                            {
-                                // If file with same name exists at destination, prompt for overwrite
-                                if (File.Exists(destFile))
-                                {
-                                    var result = MessageBox.Show(
-                                        $"File '{fileName}' already exists in the destination. Overwrite?",
-                                        "File Exists",
-                                        MessageBoxButtons.YesNo,
-                                        MessageBoxIcon.Question);
-
-                                    if (result != DialogResult.Yes)
-                                        continue;
-                                }
-
-                                File.Move(sourceFile, destFile, true);
-                                allFiles.Remove(sourceFile);
-                                itemsToRemove.Add(item);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show($"Failed to move file: {sourceFile}\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            continue;
                         }
                     }
 
@@ -168,23 +172,7 @@ namespace qDocOrganizer
                 return;
 
             var itemsToRemove = new List<ListViewItem>();
-            foreach (ListViewItem item in lstView_files.SelectedItems)
-            {
-                string filePath = item.SubItems[1].Text;
-                try
-                {
-                    if (File.Exists(filePath))
-                    {
-                        File.Delete(filePath);
-                    }
-                    allFiles.Remove(filePath);
-                    itemsToRemove.Add(item);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Failed to delete file: {filePath}\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+            FileManager.RemoveFiles(itemsToRemove);
 
             foreach (var item in itemsToRemove)
             {
@@ -208,41 +196,22 @@ namespace qDocOrganizer
                 {
                     string destinationPath = folderDialog.SelectedPath;
 
-                    foreach (ListViewItem item in lstView_files.SelectedItems)
-                    {
-                        string sourceFile = item.SubItems[1].Text;
-                        string fileName = Path.GetFileName(sourceFile);
-                        string destFile = Path.Combine(destinationPath, fileName);
-
-                        try
-                        {
-                            if (File.Exists(sourceFile))
-                            {
-                                // If file with same name exists at destination, prompt for overwrite
-                                if (File.Exists(destFile))
-                                {
-                                    var result = MessageBox.Show(
-                                        $"File '{fileName}' already exists in the destination. Overwrite?",
-                                        "File Exists",
-                                        MessageBoxButtons.YesNo,
-                                        MessageBoxIcon.Question);
-
-                                    if (result != DialogResult.Yes)
-                                        continue;
-                                }
-
-                                File.Copy(sourceFile, destFile, true);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show($"Failed to copy file: {sourceFile}\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
+                    FileManager.CopyFilesTo(destinationPath);
                 }
             }
         }
 
+        #endregion
+
+#region Form Events
+        private void qDocOrganizer_Load(object sender, EventArgs e)
+        {
+            // Set the initial theme to default
+            toolStripDefaultTheme_Click(sender, e);
+            // Set the initial folder browser description
+            folderBrowser.Description = "Select a folder to organize";
+            lb_ofdPath.ForeColor = SystemColors.ControlText;
+        }
         private void toolStripThemeDark_Click(object sender, EventArgs e)
         {
             // Set dark theme colors for controls
@@ -277,21 +246,9 @@ namespace qDocOrganizer
 
         private void toolStripAbout_Click(object sender, EventArgs e)
         {
-            string aboutText = "qDocOrganizer\n\nVersión 1.0\n\nDeveloped by QaSaR.\n\n© 2025";
             MessageBox.Show(aboutText, "Acerca de qDocOrganizer", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+        #endregion
 
-
-        private void OpenSelectedFiles(object sender, EventArgs e)
-        {
-            if (lstView_files.SelectedItems.Count > 0)
-            {
-                foreach (ListViewItem item in lstView_files.SelectedItems)
-                {
-                    string filePath = item.SubItems[1].Text;
-                    FileManager.OpenFileWithDefaultApp(filePath);
-                }
-            }
-        }
     }
 }
