@@ -44,12 +44,16 @@
             deleteToolStripMenuItem = new ToolStripMenuItem();
             renameToolStripMenuItem = new ToolStripMenuItem();
             label1 = new Label();
-            chkb_darkMode = new CheckBox();
             menuStrip1 = new MenuStrip();
             menuToolStripMenuItem = new ToolStripMenuItem();
-            toolStripMenuItem1 = new ToolStripMenuItem();
-            toolStripMenuItem2 = new ToolStripMenuItem();
-            toolStripMenuItem3 = new ToolStripMenuItem();
+            toolStripMoveTo = new ToolStripMenuItem();
+            toolStripCopyTo = new ToolStripMenuItem();
+            toolStripDelete = new ToolStripMenuItem();
+            toolStripMenuOptions = new ToolStripMenuItem();
+            toolStripMenuTheme = new ToolStripMenuItem();
+            toolStripThemeDark = new ToolStripMenuItem();
+            toolStripDefaultTheme = new ToolStripMenuItem();
+            toolStripAbout = new ToolStripMenuItem();
             contextMenuListViewItem.SuspendLayout();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -176,20 +180,9 @@
             label1.TabIndex = 7;
             label1.Text = "Selected Location:";
             // 
-            // chkb_darkMode
-            // 
-            chkb_darkMode.AutoSize = true;
-            chkb_darkMode.Location = new Point(596, 32);
-            chkb_darkMode.Name = "chkb_darkMode";
-            chkb_darkMode.Size = new Size(87, 19);
-            chkb_darkMode.TabIndex = 8;
-            chkb_darkMode.Text = "DarkTheme";
-            chkb_darkMode.UseVisualStyleBackColor = true;
-            chkb_darkMode.CheckedChanged += checkBox1_CheckedChanged;
-            // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { menuToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { menuToolStripMenuItem, toolStripMenuOptions, toolStripAbout });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(695, 24);
@@ -198,28 +191,66 @@
             // 
             // menuToolStripMenuItem
             // 
-            menuToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItem1, toolStripMenuItem2, toolStripMenuItem3 });
+            menuToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { toolStripMoveTo, toolStripCopyTo, toolStripDelete });
             menuToolStripMenuItem.Name = "menuToolStripMenuItem";
             menuToolStripMenuItem.Size = new Size(50, 20);
             menuToolStripMenuItem.Text = "Menu";
             // 
-            // toolStripMenuItem1
+            // toolStripMoveTo
             // 
-            toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new Size(127, 22);
-            toolStripMenuItem1.Text = "Move to...";
+            toolStripMoveTo.Name = "toolStripMoveTo";
+            toolStripMoveTo.Size = new Size(180, 22);
+            toolStripMoveTo.Text = "Move to...";
+            toolStripMoveTo.Click += toolStripMoveTo_Click;
             // 
-            // toolStripMenuItem2
+            // toolStripCopyTo
             // 
-            toolStripMenuItem2.Name = "toolStripMenuItem2";
-            toolStripMenuItem2.Size = new Size(127, 22);
-            toolStripMenuItem2.Text = "Copy to...";
+            toolStripCopyTo.Name = "toolStripCopyTo";
+            toolStripCopyTo.Size = new Size(180, 22);
+            toolStripCopyTo.Text = "Copy to...";
+            toolStripCopyTo.Click += toolStripCopyTo_Click;
             // 
-            // toolStripMenuItem3
+            // toolStripDelete
             // 
-            toolStripMenuItem3.Name = "toolStripMenuItem3";
-            toolStripMenuItem3.Size = new Size(127, 22);
-            toolStripMenuItem3.Text = "Delete";
+            toolStripDelete.Name = "toolStripDelete";
+            toolStripDelete.Size = new Size(180, 22);
+            toolStripDelete.Text = "Delete";
+            toolStripDelete.Click += toolStripDelete_Click;
+            // 
+            // toolStripMenuOptions
+            // 
+            toolStripMenuOptions.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuTheme });
+            toolStripMenuOptions.Name = "toolStripMenuOptions";
+            toolStripMenuOptions.Size = new Size(61, 20);
+            toolStripMenuOptions.Text = "Options";
+            // 
+            // toolStripMenuTheme
+            // 
+            toolStripMenuTheme.DropDownItems.AddRange(new ToolStripItem[] { toolStripThemeDark, toolStripDefaultTheme });
+            toolStripMenuTheme.Name = "toolStripMenuTheme";
+            toolStripMenuTheme.Size = new Size(180, 22);
+            toolStripMenuTheme.Text = "Theme Selection";
+            // 
+            // toolStripThemeDark
+            // 
+            toolStripThemeDark.Name = "toolStripThemeDark";
+            toolStripThemeDark.Size = new Size(180, 22);
+            toolStripThemeDark.Text = "Set DarkTheme";
+            toolStripThemeDark.Click += toolStripThemeDark_Click;
+            // 
+            // toolStripDefaultTheme
+            // 
+            toolStripDefaultTheme.Name = "toolStripDefaultTheme";
+            toolStripDefaultTheme.Size = new Size(180, 22);
+            toolStripDefaultTheme.Text = "Set Default Theme";
+            toolStripDefaultTheme.Click += toolStripDefaultTheme_Click;
+            // 
+            // toolStripAbout
+            // 
+            toolStripAbout.Name = "toolStripAbout";
+            toolStripAbout.Size = new Size(52, 20);
+            toolStripAbout.Text = "About";
+            toolStripAbout.Click += toolStripAbout_Click;
             // 
             // qDocOrganizer
             // 
@@ -227,7 +258,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             ClientSize = new Size(695, 656);
-            Controls.Add(chkb_darkMode);
             Controls.Add(menuStrip1);
             Controls.Add(label1);
             Controls.Add(lstView_files);
@@ -264,11 +294,15 @@
         private ToolStripMenuItem renameToolStripMenuItem;
         private ToolStripMenuItem deleteToolStripMenuItem;
         private ToolStripMenuItem copyToToolStripMenuItem;
-        private CheckBox chkb_darkMode;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem menuToolStripMenuItem;
-        private ToolStripMenuItem toolStripMenuItem1;
-        private ToolStripMenuItem toolStripMenuItem2;
-        private ToolStripMenuItem toolStripMenuItem3;
+        private ToolStripMenuItem toolStripMoveTo;
+        private ToolStripMenuItem toolStripCopyTo;
+        private ToolStripMenuItem toolStripDelete;
+        private ToolStripMenuItem toolStripMenuOptions;
+        private ToolStripMenuItem toolStripMenuTheme;
+        private ToolStripMenuItem toolStripThemeDark;
+        private ToolStripMenuItem toolStripDefaultTheme;
+        private ToolStripMenuItem toolStripAbout;
     }
 }

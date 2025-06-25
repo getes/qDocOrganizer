@@ -118,6 +118,11 @@ namespace qDocOrganizer
             }
         }
 
+        private void toolStripMoveTo_Click(object sender, EventArgs e)
+        {
+            MoveTo_Click(sender, e);
+        }
+
         private void MoveTo_Click(object sender, EventArgs e)
         {
             if (lstView_files.SelectedItems.Count == 0)
@@ -177,6 +182,11 @@ namespace qDocOrganizer
             }
         }
 
+        private void toolStripDelete_Click(object sender, EventArgs e)
+        {
+            deleteToolStripMenuItem_Click(sender, e);
+        }
+
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (lstView_files.SelectedItems.Count == 0)
@@ -206,6 +216,12 @@ namespace qDocOrganizer
                 lstView_files.Items.Remove(item);
             }
         }
+
+        private void toolStripCopyTo_Click(object sender, EventArgs e)
+        {
+            copyToToolStripMenuItem_Click(sender, e);
+        }
+
         private void copyToToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (lstView_files.SelectedItems.Count == 0)
@@ -262,16 +278,14 @@ namespace qDocOrganizer
 
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void toolStripThemeDark_Click(object sender, EventArgs e)
         {
-            if (chkb_darkMode.Checked == true)
-            {
-                SetDarkTheme();
-            }
-            else
-            {
-                setDefaultTheme();
-            }
+            SetDarkTheme();
+        }
+
+        private void toolStripDefaultTheme_Click(object sender, EventArgs e)
+        {
+            setDefaultTheme();
         }
 
         private void SetDarkTheme()
@@ -305,6 +319,12 @@ namespace qDocOrganizer
             lb_extFilter.ForeColor = SystemColors.ControlText;
             chkb_recursive.ForeColor = SystemColors.ControlText;
 
+        }
+
+        private void toolStripAbout_Click(object sender, EventArgs e)
+        {
+            string aboutText = "qDocOrganizer\n\nVersión 1.0\n\nDeveloped by QaSaR.\n\n© 2025";
+            MessageBox.Show(aboutText, "Acerca de qDocOrganizer", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
